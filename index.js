@@ -2,7 +2,6 @@ const fs = require('fs');
 const discord = require('discord.js');
 const ffmpegPath = require('ffmpeg-static');
 const { Player } = require('discord-player');
-const client = new discord.Client({ disableMentions: 'everyone' });
 
 // Initialize the Discord client with necessary intents
 const client = new discord.Client({
@@ -15,17 +14,23 @@ const client = new discord.Client({
     disableMentions: 'everyone'
 });
 
+// Initialize player
 const player = new Player(client);
 client.player = player;
+
+// Load config from environment variables
 client.config = {
     game: process.env.GAME,
     prefix: process.env.PREFIX,
     token_bot: process.env.TOKEN_BOT
 };
+
+// Load emojis and filters
 client.emotes = require('./config/emojis.json');
 client.filters = require('./config/filters.json');
 client.commands = new discord.Collection();
 
+// Load events
 fs.readdir('./events/', (err, files) => {
     if (err) return console.error(err);
     files.forEach(file => {
@@ -36,6 +41,7 @@ fs.readdir('./events/', (err, files) => {
     });
 });
 
+// Load player events
 fs.readdir('./player-events/', (err, files) => {
     if (err) return console.error(err);
     files.forEach(file => {
@@ -46,6 +52,7 @@ fs.readdir('./player-events/', (err, files) => {
     });
 });
 
+// Load commands
 fs.readdir('./commands/', (err, files) => {
     if (err) return console.error(err);
     files.forEach(file => {
@@ -57,4 +64,8 @@ fs.readdir('./commands/', (err, files) => {
     });
 });
 
+// Log the path to FFmpeg to ensure it's found
+console.log(`FFmpeg Path: ${ffmpegPath}`);
+
+// Log in to Discord with the bot's token
 client.login(client.config.token_bot);
