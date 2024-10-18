@@ -1,9 +1,19 @@
 const fs = require('fs');
 const discord = require('discord.js');
-
+const ffmpegPath = require('ffmpeg-static');
+const { Player } = require('discord-player');
 const client = new discord.Client({ disableMentions: 'everyone' });
 
-const { Player } = require('discord-player');
+// Initialize the Discord client with necessary intents
+const client = new discord.Client({
+    intents: [
+        discord.GatewayIntentBits.Guilds,
+        discord.GatewayIntentBits.GuildVoiceStates, // Required for voice state events
+        discord.GatewayIntentBits.GuildMessages,
+        discord.GatewayIntentBits.MessageContent // Needed if you're reading message content
+    ],
+    disableMentions: 'everyone'
+});
 
 const player = new Player(client);
 client.player = player;
