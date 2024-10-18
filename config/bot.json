@@ -1,5 +1,5 @@
-{
-    "game": "GAME",
-    "prefix": "PREFIX",
-    "token_bot": "TOKEN"
-}
+client.config = {
+    game: process.env.GAME,
+    prefix: process.env.PREFIX,
+    token_bot: process.env.TOKEN_BOT
+};
