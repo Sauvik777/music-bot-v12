@@ -7,7 +7,11 @@ const { Player } = require('discord-player');
 
 const player = new Player(client);
 client.player = player;
-client.config = require('./config/bot.json');
+client.config = {
+    game: process.env.GAME,
+    prefix: process.env.PREFIX,
+    token_bot: process.env.TOKEN_BOT
+};
 client.emotes = require('./config/emojis.json');
 client.filters = require('./config/filters.json');
 client.commands = new discord.Collection();
